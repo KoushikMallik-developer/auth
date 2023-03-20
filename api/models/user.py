@@ -13,8 +13,8 @@ class User(AbstractBaseUser):
     )
     fname = models.CharField(max_length=255)
     lname = models.CharField(max_length=255)
-    dob = models.DateField()
-    phone = models.CharField(max_length=15)
+    dob = models.DateField(null=True)
+    phone = models.CharField(max_length=15, null=True)
     image = models.ImageField(upload_to='images/users/', default="images/users/defaultUserImage.png", null=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
@@ -47,14 +47,14 @@ class User(AbstractBaseUser):
 
         return self.is_admin
 
-    @property
-    def get_username(self):
-        """Fetch username as Email"""
-
-        if self.email:
-            return self.email
-        else:
-            return None
+    # @property
+    # def get_username(self):
+    #     """Fetch username as Email"""
+    #
+    #     if self.email:
+    #         return self.email
+    #     else:
+    #         return None
 
     @property
     def get_phone(self):
