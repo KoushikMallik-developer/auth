@@ -20,5 +20,5 @@ import api
 
 urlpatterns = [
     path('admin/', admin.site.urls, name="Admin Panel"),
-    path('api/v1/', include(api.urls)),
+    path('api/v1/', include('api.urls')),
 ]
