@@ -16,8 +16,6 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-import api
-
 urlpatterns = [
     path('admin/', admin.site.urls, name="Admin Panel"),
     path('api/v1/', include('api.urls')),
