@@ -21,5 +21,5 @@ class UserLoginView(APIView):
             tokens = get_tokens_for_user(user)
             return Response({'token': tokens, 'msg': 'Login Success'}, status=status.HTTP_200_OK)
         else:
-            return Response({'errors': {'non_field_errors': ['Email or Password is not Valid']}},
+            return Response({'errors': {'non_field_errors': ['Email or Password is not Valid or verified.']}},
                             status=status.HTTP_404_NOT_FOUND)

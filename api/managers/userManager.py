@@ -1,5 +1,7 @@
 from django.contrib.auth.base_user import BaseUserManager
 
+from api.views.helpers.user_model_helper import generate_id
+
 
 # Custom User Manager
 class UserManager(BaseUserManager):
@@ -12,6 +14,7 @@ class UserManager(BaseUserManager):
             raise ValueError('Users must have an email address')
 
         user = self.model(
+            id=generate_id(fname),
             email=self.normalize_email(email),
             dob=dob,
             fname=fname,
