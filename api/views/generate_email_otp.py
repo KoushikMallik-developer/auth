@@ -1,5 +1,3 @@
-import random
-
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -7,6 +5,7 @@ from rest_framework.views import APIView
 from api.models import User
 from api.models.verification import Verification
 from api.renderers.json_renderer import UserRenderer
+from api.third_parties.email_helper.email_util import EmailUtil
 
 
 class GenerateEmailOTPView(APIView):
@@ -20,19 +19,20 @@ class GenerateEmailOTPView(APIView):
                 if user.count() == 1:
                     user = user[0]
                     if not user.get_is_active:
-                        _otp = ""
-                        for i in range(6):
-                            _digit = str(random.randint(a=0, b=9))
-                            _otp += _digit
                         verification = Verification.objects.filter(user=user)
+
+                        _otp = EmailUtil.send_verification_email(request.data)
+
                         if verification.count() != 1:
                             verification = Verification(user=user, security_key=_otp)
                         else:
                             verification = verification[0]
+
                             verification.security_key = _otp
                         verification.save()
-                        print(_otp)
-                        # send_email_otp()
+
+                        print(_otp)  # remove this in production
+
                         return Response({'msg': 'OTP sent to email.'}, status=status.HTTP_200_OK)
                     else:
                         return Response({'msg': 'User is already verified.'}, status=status.HTTP_200_OK)
