@@ -12,5 +12,9 @@ class UserProfileView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        serializer = UserProfileSerializer(request.user)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        try:
+            serializer = UserProfileSerializer(request.user)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({'msg': "Some Error Occured - " + str(e.__str__())},
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
