@@ -12,10 +12,6 @@ class UserChangePasswordView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        try:
-            serializer = UserChangePasswordSerializer(data=request.data, context={'user': request.user})
-            serializer.is_valid(raise_exception=True)
-            return Response({'msg': 'Password Changed Successfully'}, status=status.HTTP_200_OK)
-        except Exception as e:
-            return Response({'msg': "Some Error Occured - " + str(e.__str__())},
-                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        serializer = UserChangePasswordSerializer(data=request.data, context={'user': request.user})
+        serializer.is_valid(raise_exception=True)
+        return Response({'msg': 'Password Changed Successfully'}, status=status.HTTP_200_OK)
