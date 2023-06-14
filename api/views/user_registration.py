@@ -14,7 +14,6 @@ class UserRegistrationView(APIView):
             user_reg_serializer = UserRegistrationSerializer(data=request.data)
             if user_reg_serializer.is_valid(raise_exception=True):
                 user_reg_serializer.save()
-                # tokens = get_tokens_for_user(user)
                 return Response({"msg": "Registration Successful. Please verify your Email."},
                                 status=status.HTTP_201_CREATED)
             return Response({"msg": "Registration Failed"}, status=status.HTTP_400_BAD_REQUEST)

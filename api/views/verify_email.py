@@ -16,7 +16,6 @@ class VerifyOTPView(APIView):
             _otp = request.data.get("otp")
             if email and email != "":
                 if _otp and _otp != "":
-                    # try:
                     user = User.objects.filter(email=email)
                     if user.count() == 1:
                         user = user[0]
